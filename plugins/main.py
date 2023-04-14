@@ -14,18 +14,18 @@ async def main_func(bot: Stark, msg: Message):
         if user.status not in ['creator', 'administrator']:
             return
         if not user.can_delete_messages:
-            await msg.react("You don't have `CanDeleteMessages` right. Sorry!")
+            await msg.react("You don't have `CanDeleteMessages` right. Sorry!😒")
             return
     bot_id = (await bot.get_me()).id
     cm = await bot.get_chat_member(msg.chat.id, bot_id)
     if cm.status != "administrator":
-        await msg.react("I'm not admin here!")
+        await msg.react("⚠️ I'm not admin here! Make Me Admin & Try Again")
         return
     elif not cm.can_promote_members:
-        await msg.react("I can't promote users here. I need that right to work.")
+        await msg.react("⚠️ I can't promote users here. I need that right to work.")
         return
     elif not cm.can_delete_messages:
-        await msg.react("I can't delete messages here. I need that right to work.")
+        await msg.react("⚠️ I can't delete messages here. I need that right to work.")
         return
     link = (await bot.get_chat(msg.chat.id)).invite_link
     try:
@@ -45,10 +45,10 @@ async def main_func(bot: Stark, msg: Message):
                 numbers.append(m.message_id)
             break
         except FloodWait as e:
-            await msg.react(f"You need to wait for: {e.x} seconds. \n\nTelegram Restrictions!")
+            await msg.react(f"You need to wait for: {e.x} seconds. \n\nTelegram Restrictions!🥶")
             await asyncio.sleep(e.x)
     id_lists = [numbers[i*100:(i+1)*100] for i in range((len(numbers)+100-1) // 100)]
-    status = await msg.reply("Trying to delete all messages...")
+    status = await msg.reply("Trying to delete all messages... ✨")
     for id_list in id_lists:
         while True:
             try:
@@ -57,6 +57,6 @@ async def main_func(bot: Stark, msg: Message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 Stark.log(str(e), logging.WARN)
-    await msg.react("Successful! Deleted Everything. For more bots visit @StarkBots")
+    await msg.react("✅ Successful! Deleted Everything. For more bots visit @Movies_Botz")
     await status.delete()
     await userbot.leave_chat(msg.chat.id)
